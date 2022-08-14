@@ -4,10 +4,11 @@ import styled from "styled-components";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
 import {Link} from "react-router-dom";
+import Logout from "../auth/Logout";
 
 
 
-export default function Navbar() {
+export default function Navbar(props) {
   const [navbarState, setNavbarState] = useState(false);
   return (
     <>
@@ -40,7 +41,12 @@ export default function Navbar() {
           <Link to='/countries' onClick={() => setNavbarState(false)}>Countries</Link>
           </li>
         </ul>
-        <button>Login</button>
+        { props.logged ?<Link to='/logout'><button onClick={props.handleLogout}>Logout</button></Link>:
+        <>
+        <button onClick={props.toggleShowRegister}>Register</button>
+        <button onClick={props.toggleShowLogin}>Login</button>
+        </>
+        }
       </Nav>
       <ResponsiveNav state={navbarState}>
         <ul>
