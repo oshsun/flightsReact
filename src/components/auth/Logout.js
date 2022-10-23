@@ -5,13 +5,18 @@ export default function Logout(props) {
   const history = useNavigate();
 
   useEffect(() => {
-    console.log("logout")
-  
+    console.log("logout");
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    history("/home");
-    props.setLogged(false)
-  
-  });
+    localStorage.removeItem("username");
+    localStorage.removeItem("is_super_user");
+    localStorage.removeItem("is_staff_member");
+    props.setIsSuperUser(false);
+    props.setIsStaff(false);
+    props.setUsername("");
+
+    history("");
+    props.setLogged(false);
+  }, []);
   return <div>Logout</div>;
 }

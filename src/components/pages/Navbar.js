@@ -1,24 +1,38 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import logo from "../assets/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { VscChromeClose } from "react-icons/vsc";
-import {Link} from "react-router-dom";
-import Logout from "../auth/Logout";
-
+import { Link } from "react-router-dom";
 
 
 export default function Navbar(props) {
   const [navbarState, setNavbarState] = useState(false);
+  console.log(props.IsStaff);
+
+  const handleLogout = () => {
+    console.log("logout from navbar");
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    localStorage.removeItem("username");
+    localStorage.removeItem("is_super_user");
+    localStorage.removeItem("is_staff_member");
+    props.setIsSuperUser(false);
+    props.setIsStaff(false);
+    props.setUsername("");
+    props.setLogged(false);
+  };
+
   return (
     <>
       <Nav>
-        <div className="brand">
-          <div className="container">
-            <img src="" alt="" />
-            TravelOsh
-          </div>
-          <div className="toggle">
+        <div className='brand'>
+          <div className='container'>Travelosh</div>
+          {props.username && (
+            <span style={{ marginLeft: "50px" }}>Welcome {props.username}</span>
+          )}
+
+
+          <div className='toggle'>
             {navbarState ? (
               <VscChromeClose onClick={() => setNavbarState(false)} />
             ) : (
@@ -29,44 +43,80 @@ export default function Navbar(props) {
 
         <ul>
           <li>
-            <Link to='/home' onClick={() => setNavbarState(false)}>Home</Link>
+            <Link to='' onClick={() => setNavbarState(false)}>
+              Home
+            </Link>
           </li>
           <li>
-          <Link to='/airlines' onClick={() => setNavbarState(false)}>Airlies Companies</Link>
+            <Link to='/deals' onClick={() => setNavbarState(false)}>
+              Last Minute Deals
+            </Link>
           </li>
           <li>
-          <Link to='/deals' onClick={() => setNavbarState(false)}>Last Minute Deals</Link>
+            <Link to='/countries' onClick={() => setNavbarState(false)}>
+              Countries
+            </Link>
           </li>
-          <li>
-          <Link to='/countries' onClick={() => setNavbarState(false)}>Countries</Link>
-          </li>
+
+          {props.logged && (
+            <>
+              <li>
+                <Link
+                  to='/customer-profile'
+                  onClick={() => setNavbarState(false)}>
+                  My Profile
+                </Link>
+              </li>
+              <li>
+                <Link to='/my-tickets'>My Tickets</Link>
+              </li>
+            </>
+          )}
         </ul>
-        { props.logged ?<Link to='/logout'><button onClick={props.handleLogout}>Logout</button></Link>:
-        <>
-        <button onClick={props.toggleShowRegister}>Register</button>
-        <button onClick={props.toggleShowLogin}>Login</button>
-        </>
-        }
+        {props.logged ? (
+          <>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <button onClick={props.toggleShowRegister}>Register</button>
+            <button onClick={props.toggleShowLogin}>Login</button>
+          </>
+        )}
+
+       {localStorage.getItem("is_staff_member") === "true" &&
+          localStorage.getItem("is_super_user") === "false" && (
+            <Link to='/Staff'>
+              <button>Staff</button>
+            </Link>
+          )}
+        
+
+        {localStorage.getItem("is_super_user") === "true" && (
+          <a href='http://127.0.0.1:8000/admin/' target='_blank'>
+            <button>Admin</button>
+          </a>
+        )}
       </Nav>
       <ResponsiveNav state={navbarState}>
         <ul>
           <li>
-            <a href="#home" onClick={() => setNavbarState(false)}>
+            <Link to='' onClick={() => setNavbarState(false)}>
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#services" onClick={() => setNavbarState(false)}>
+            <a href='#services' onClick={() => setNavbarState(false)}>
               About
             </a>
           </li>
           <li>
-            <a href="#recommend" onClick={() => setNavbarState(false)}>
+            <a href='#recommend' onClick={() => setNavbarState(false)}>
               Places
             </a>
           </li>
           <li>
-            <a href="#testimonials" onClick={() => setNavbarState(false)}>
+            <a href='#testimonials' onClick={() => setNavbarState(false)}>
               Testimonials
             </a>
           </li>

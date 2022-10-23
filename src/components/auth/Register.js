@@ -67,6 +67,7 @@ export default function Modal(props) {
     }
 
     console.log("Submitted!");
+    
     axios
       .post("http://127.0.0.1:8000/adduser", {
         username: usernameValue,
@@ -77,7 +78,8 @@ export default function Modal(props) {
       })
       .then((response) => {
         if (response.status === 201) {
-          let res = axios.post("http://127.0.0.1:8000/login", {
+          console.log(`created the user welcome ${usernameValue}`);
+          let res = axios.post("http://127.0.0.1:8000/token/", {
             username: usernameValue,
             password: passwordValue,
           });
@@ -96,13 +98,9 @@ export default function Modal(props) {
           alert("This Email/Username is already taken");
         }
       });
-
-    resetusername();
-    resetEmail();
     resetPassword();
-    setStaff(false);
-    setSuperuser(false);
-    props.isLogged()
+    resetEmail();
+    resetusername();
   };
 
   const usernameClasses = usernameHasError

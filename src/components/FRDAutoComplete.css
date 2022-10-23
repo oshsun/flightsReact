@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  margin: auto;
+  text-align: center;
+}
+
+li {
+  display: inline-block;
+}
+
+ul.no_pad {
+  padding: 0;
+}

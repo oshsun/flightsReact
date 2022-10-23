@@ -28,16 +28,16 @@ const Countries = () => {
         {countries.map((country) => {
           return (
             <div className="destination" key={country.id}>
-              <img src="https://cdn.mos.cms.futurecdn.net/pD3bsKPrjsqNiFDGRL5oq6.jpg" alt="" />
+              <img src={country.image_url} alt="" />
               <h3>{country.name}</h3>
-              <p>description</p>
+              {/* <p>description</p> */}
               <div className="info">
            
-                <h4>my price</h4>
+                {/* <h4>my price</h4> */}
               </div>
               <div className="distance">
-                <span>1000 Kms</span>
-                <span>testing</span>
+                {/* <span>1000 Kms</span>
+                <span>testing</span> */}
               </div>
             </div>
           );
